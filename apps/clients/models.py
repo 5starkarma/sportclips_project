@@ -3,7 +3,10 @@ from django_tenants.models import TenantMixin, DomainMixin
 
 
 class Client(TenantMixin):
-    name = models.CharField(max_length=100)
+    first_name = models.CharField(max_length=16)
+    last_name = models.CharField(max_length=32)
+    phone = models.CharField(max_length=10)
+    email = models.EmailField()
     paid_until = models.DateField(blank=True, null=True)
     on_trial = models.BooleanField(blank=True, null=True)
     created_on = models.DateField(auto_now_add=True)
