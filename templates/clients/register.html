@@ -1,0 +1,117 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="col-md-12" style="padding: 0;">
+    <div class="secondary-header">
+        <div class="container" style="overflow: hidden;">
+            <div class="row">
+                <div class="col-md-6">
+                    <img class="header-img" src="{% static '/images/header.png' %}"/>
+                </div>
+                <div class="col-md-6 d-none d-sm-block">
+                    <div class="container header-title">
+                        <h1 class="main-title">Cloud payroll automation</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container col-md-8" style="padding: 20px;">
+    <div class="row">
+        <div class="col-md-7 col-xs-12 order-xs-2 order-sm-1 order-md-1">
+            <div class="container">
+                <div class="row marketing-box">
+                    <div class="col-md-4 col-lg-3">
+                        <div class="container mr-2">
+                            <i class="fas fa-users fa-4x"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-8 col-lg-9">
+                        <h6 class="marketing-title">Unlimited manager accounts</h6>
+                        <p class="marketing-text">Add/remove as many manager accounts as you'd like with our invite
+                            system.</p>
+                    </div>
+                </div>
+                <div class="row marketing-box">
+                    <div class="col-md-4 col-lg-3">
+                        <div class="container ml-3">
+                            <i class="fas fa-file-chart-line fa-4x"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-8 col-lg-9">
+                        <h6 class="marketing-title">One-on-one spreadsheet</h6>
+                        <p class="marketing-text">A spreadsheet for managers to give a one-on-one
+                            review of each employees performance.</p>
+                    </div>
+                </div>
+                <div class="row marketing-box">
+                    <div class="col-md-4 col-lg-3">
+                        <div class="container ml-2">
+                            <i class="fas fa-cog fa-4x"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-8 col-lg-9">
+                        <h6 class="marketing-title">Adjustable bonus calculation settings</h6>
+                        <p class="marketing-text">Change bonus calculation thresholds.</p>
+                    </div>
+                </div>
+                <div class="row marketing-box">
+                    <div class="col-md-4 col-lg-3">
+                        <div class="container">
+                            <i class="fas fa-user-check fa-4x"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-8 col-lg-9">
+                        <h6 class="marketing-title">Employee rest-break verification</h6>
+                        <p class="marketing-text">Receive SMS and/or email notifications about employees
+                            who worked over the set limit without a break.</p>
+                    </div>
+                </div>
+                <div class="row marketing-box">
+                    <div class="col-md-4 col-lg-3">
+                        <div class="container">
+                            <i class="fas fa-chart-network fa-4x"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-8 col-lg-9">
+                        <h6 class="marketing-title">Process several stores at once</h6>
+                        <p class="marketing-text">Uploaded reports can contain one or several stores. The system
+                            will automatically detect and process each one individually.</p>
+                    </div>
+                </div>
+                <div class="row marketing-box">
+                    <div class="col-md-4 col-lg-3">
+                        <div class="container">
+                            <i class="fas fa-cloud-download fa-4x"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-8 col-lg-9">
+                        <h6 class="marketing-title">Access past reports</h6>
+                        <p class="marketing-text">Set the system to save the reports for future access.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5 order-xs-1 order-sm-2 order-md-2">
+            <div class="sign-up-box">
+                <div class="container">
+                    <h2 class="sign-up-title mt-4">14-day free trial</h2>
+                    <p>Enter your info to sign up for a free trial. No gimmicks.</p>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <fieldset class="form-group">
+                            {{ form|crispy }}
+                        </fieldset>
+                        <div clss="form-group">
+                            <button class="btn btn-danger btn-lg btn-block" type="submit">Sign up for free trial
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content%}

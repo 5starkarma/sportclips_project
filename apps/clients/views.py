@@ -29,4 +29,4 @@ def register(request):
                 return HttpResponseRedirect('//' + domain.domain + '/register')
     else:
         form = ClientForm()
-    return render(request, 'clients/registration.html', {'form': form})
+    return render(request, 'clients/register.html', {'form': form})

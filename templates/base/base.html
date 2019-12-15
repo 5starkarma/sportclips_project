@@ -1,5 +1,4 @@
 {% load static %}
-{% load auth_extras %}
 
 <html lang="en">
 <head>
@@ -13,6 +12,7 @@
     <link href="{% static 'main.css' %}"
           rel="stylesheet"
           type="text/css">
+    <script crossorigin="anonymous" src="https://kit.fontawesome.com/205199a6ef.js"></script>
     <!--Page Tab Title-->
     {% if title %}
     <title>{{ title }} | Sportclips</title>
@@ -22,7 +22,8 @@
 </head>
 <header class="site-header">
     <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
-        <div class="container col-md-12">
+        <div class="container col-md-8">
+            <a class="nav-item nav-link site-title" href="#" style="text-align: center;">Sportclips<strong>Payroll</strong></a>
             <button aria-controls="navbarToggle"
                     aria-expanded="false"
                     aria-label="Toggle navigation"
@@ -34,20 +35,19 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarToggle">
                 <div class="navbar-nav mr-auto">
-                    <a class="nav-item nav-link" href="{% url 'home' %}">Home</a>
-                    <a class="nav-item nav-link" href="{% url 'payroll' %}">Payroll</a>
-                    {% if request.user|is_in_group:"owner" %}
-                    <a class="nav-item nav-link" href="{% url 'settings' %}">Settings</a>
-                    {% endif %}
+                    <a class="nav-item nav-link" href="#">Home</a>
+                    <a class="nav-item nav-link" href="#">Payroll</a>
+                    <a class="nav-item nav-link" href="#">Settings</a>
                 </div>
-
                 <!-- Navbar Right Side -->
                 <div class="navbar-nav">
                     {% if user.is_authenticated %}
-                    <a class="nav-item nav-link" href="{% url 'account' %}">Account</a>
-                    <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+                    <a class="nav-item nav-link" href="#">Account</a>
+                    <a class="nav-item nav-link" href="#">Logout</a>
                     {% else %}
-                    <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+                    <a class="nav-item nav-link" href="#">Sign up</a>
+                    <a class="nav-item nav-link" href="#">Login</a>
+                    <a class="nav-item nav-link text-muted" href="#">v2.0.1</a>
                     {% endif %}
                 </div>
             </div>
@@ -65,9 +65,7 @@
 {% block content %}{% endblock %}
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script crossorigin="anonymous"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script crossorigin="anonymous"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>

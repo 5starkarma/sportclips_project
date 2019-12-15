@@ -38,6 +38,7 @@ SHARED_APPS = [
     'django_tenants',
     'apps.clients',
     'apps.users',
+    'crispy_forms',
     'django.contrib.auth',
     'django.contrib.messages',
     'django.contrib.sessions',
