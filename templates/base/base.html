@@ -23,7 +23,8 @@
 <header class="site-header">
     <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
         <div class="container col-md-8">
-            <a class="nav-item nav-link site-title" href="#" style="text-align: center;">Sportclips<strong>Payroll</strong></a>
+            <a class="nav-item nav-link site-title" href="#"
+               style="text-align: center;">Sportclips<strong>Payroll</strong></a>
             <button aria-controls="navbarToggle"
                     aria-expanded="false"
                     aria-label="Toggle navigation"
@@ -47,7 +48,6 @@
                     {% else %}
                     <a class="nav-item nav-link" href="#">Sign up</a>
                     <a class="nav-item nav-link" href="#">Login</a>
-                    <a class="nav-item nav-link text-muted" href="#">v2.0.1</a>
                     {% endif %}
                 </div>
             </div>
@@ -63,6 +63,12 @@
 {% endfor %}
 {% endif %}
 {% block content %}{% endblock %}
+<!-- Footer -->
+<div class="footer mt-4">
+    <div class="container">
+        <p class="text-muted"> © David Alford 2019 | Version 2.0.1</p>
+    </div>
+</div>
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
