@@ -18,12 +18,15 @@ class ClientForm(forms.ModelForm):
         widget=forms.TextInput(attrs={'placeholder': 'Email address'}),
         label='',
         help_text='Team leader\'s email address.')
+    schema_name = forms.CharField(
+        widget=forms.HiddenInput(),
+        required=False,
+        initial='')
 
     class Meta:
         model = Client
         exclude = ()
         widgets = {
-            'schema_name': forms.HiddenInput(),
             'paid_until': forms.HiddenInput(),
             'on_trial': forms.HiddenInput(),
         }

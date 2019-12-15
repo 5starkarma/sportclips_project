@@ -36,6 +36,7 @@ AUTH_USER_MODEL = 'users.User'
 
 SHARED_APPS = [
     'django_tenants',
+    'apps.base',
     'apps.clients',
     'apps.users',
     'crispy_forms',
@@ -69,12 +70,11 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'configs.urls'
 
-TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [TEMPLATE_DIR, ],
-        'APP_DIRS': False,
+        'DIRS': [],
+        'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.request',

@@ -24,9 +24,11 @@ def register(request):
             domain.is_primary = False
             domain.save()
             if DEVELOPMENT:
-                return HttpResponseRedirect('//' + domain.domain + ':8000/register')
+                return HttpResponseRedirect('//' + domain.domain + ':8000/heaven')
             else:
                 return HttpResponseRedirect('//' + domain.domain + '/register')
+        else:
+            print(form.errors)
     else:
         form = ClientForm()
     return render(request, 'clients/register.html', {'form': form})
