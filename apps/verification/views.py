@@ -17,6 +17,7 @@ def resend_phone_verification(request):
     pv_object, _ = PhoneVerification.objects.get_or_create(user=request.user)
     pv_object.create_new_passcode()
     pv_object.save()
+    print('phone:' + request.user.phone)
     pv_object.send_passcode(request.user.phone)
     return redirect('phone-verification')
 
@@ -27,12 +28,12 @@ def check_phone_verified(request):
     if pv_object.verified:
         return redirect('main')
     else:
-        return redirect('resend')
+        return redirect('resend-phone-verification')
 
 
 class PhoneVerificationView(LoginRequiredMixin, SuccessMessageMixin, FormView):
     form_class = PhoneVerificationForm
-    template_name = 'phone_verify/phoneverification.html'
+    template_name = 'phone_verify/phone_verification.html'
     success_url = reverse_lazy('overview')
     success_message = 'You have successfully verified your phone number!'
 

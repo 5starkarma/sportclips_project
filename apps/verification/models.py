@@ -22,11 +22,13 @@ class PhoneVerification(models.Model):
         self.save()
 
     def send_passcode(self, phone):
-        try:
-            client = Client(account_sid, auth_token)
-            client.messages.create(
-                body=f"Your SC payroll phone verification code is: {self.passcode}",
-                from_=sportclips_phone,
-                to='1' + str(phone))
-        except TwilioRestException:
-            pass
+        # try:
+        print('sending sms')
+        client = Client(account_sid, auth_token)
+        client.messages.create(
+            body=f"Your SC payroll phone verification code is: {self.passcode}",
+            from_=sportclips_phone,
+            to='1' + str(phone))
+        # except TwilioRestException:
+        #     print('TwilioRestException')
+        #     pass

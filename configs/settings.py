@@ -154,7 +154,7 @@ MEDIA_URL = '/media/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-#  LOGIN_REDIRECT_URL = 'verify-redirect'
+LOGIN_REDIRECT_URL = 'check-phone-verified'
 
 LOGIN_URL = 'login'
 
