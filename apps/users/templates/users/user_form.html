@@ -1,0 +1,39 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="col-md-12 mb-4" style="padding: 0;">
+    <div class="secondary-header">
+        <div class="container" style="overflow: hidden;">
+            <div class="row">
+                <div class="col-md-6">
+                    <img class="header-img" src="{% static '/images/header.png' %}"/>
+                </div>
+                <div class="col-md-6 d-none d-sm-block">
+                    <div class="container header-title">
+                        <h1 class="main-title">Cloud payroll automation</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-5 order-xs-1 order-sm-2 order-md-2">
+    <div class="sign-up-box">
+        <div class="container">
+            <h2 class="sign-up-title mt-4">User profile</h2>
+            <p>Fill out some profile information so we can build your profile.</p>
+            <form method="POST">
+                {% csrf_token %}
+                <fieldset class="form-group">
+                    {{ form|crispy }}
+                </fieldset>
+                <div class="form-group">
+                    <button class="btn btn-danger btn-lg btn-block" type="submit">Next: Payroll settings
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

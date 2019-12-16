@@ -1,0 +1,26 @@
+{% extends "employees/main.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block main %}
+
+<div class="container">
+    <div class="row">
+        <div class="memo-container">
+            <form method="POST">
+                {% csrf_token %}
+                <fieldset class="form-group">
+                    <h4>Verify Your Phone</h4>
+                    {{ form|crispy }}
+                </fieldset>
+                <div class="form-group">
+                    <button class="btn btn-warning" type="submit">
+                        <span class="fa fa-check"></span> Verify Passcode
+                    </button>
+                    <button class="btn btn-default" onclick="location.href='{% url 'resend' %}'">Resend</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

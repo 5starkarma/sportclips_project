@@ -13,6 +13,10 @@ class Client(TenantMixin):
 
     # default true, schema will be automatically created and synced when it is saved
     auto_create_schema = True
+    auto_drop_schema = True
+
+    def __str__(self):
+        return str(self.schema_name)
 
 
 class Domain(DomainMixin):

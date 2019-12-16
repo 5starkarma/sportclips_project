@@ -21,5 +21,6 @@ urlpatterns = [
 
     # include all app urls
     path('', include('apps.clients.urls')),
+    path('profile/', include('apps.users.urls')),
 
 ]
