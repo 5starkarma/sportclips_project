@@ -18,7 +18,7 @@ def resend_phone_verification(request):
     pv_object.create_new_passcode()
     pv_object.save()
     pv_object.send_passcode(request.user.phone)
-    return redirect('phone-verify')
+    return redirect('phone-verification')
 
 
 @login_required

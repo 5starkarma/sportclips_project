@@ -30,8 +30,8 @@ def user_register(request):
                                       f'must accounts must be approved by Team '
                                       f'leader before login.')
             if team_leader in user.groups.all():
-                return redirect('Team leader')
-            return redirect('Not team leader')
+                return redirect('setup-payroll')
+            return redirect('check-phone-verified')
     else:
         form = UserRegisterForm()
     return render(request, 'users/user_form.html', {'form': form})
