@@ -165,9 +165,9 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = "davidalford678@gmail.com"
 EMAIL_HOST_PASSWORD = ""
 
-#  account_sid = 'AC70233c808993feb2aff1dcad5aa9eb18'
-#  auth_token = 'c2577e46bc0d6c7c505cd3f02d7fd6e0'
-#  clearpath_phone = '+15593776100'
+account_sid = 'AC6017eec02855c2846508b5c8534a72b8'
+auth_token = 'a34191d01d4e472cb0cf9982ce5e6001'
+sportclips_phone = '+15592057660'
 
 TENANT_MODEL = "clients.Client"
 TENANT_DOMAIN_MODEL = "clients.Domain"
