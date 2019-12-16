@@ -21,3 +21,6 @@ class Client(TenantMixin):
 
 class Domain(DomainMixin):
     pass
+
+    def __str__(self):
+        return str(self.tenant)
