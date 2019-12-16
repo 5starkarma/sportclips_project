@@ -2,22 +2,7 @@
 {% load static %}
 {% load crispy_forms_tags %}
 {% block content %}
-<div class="col-md-12 mb-4" style="padding: 0;">
-    <div class="secondary-header">
-        <div class="container" style="overflow: hidden;">
-            <div class="row">
-                <div class="col-md-6">
-                    <img class="header-img" src="{% static '/images/header.png' %}"/>
-                </div>
-                <div class="col-md-6 d-none d-sm-block">
-                    <div class="container header-title">
-                        <h1 class="main-title">Cloud payroll automation</h1>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
 <div class="container col-md-8" style="padding: 20px;">
     <div class="row">
         <div class="col-md-7 col-xs-12 order-xs-2 order-sm-1 order-md-1">
@@ -25,7 +10,7 @@
                 <div class="row marketing-box">
                     <div class="col-md-4 col-lg-3">
                         <div class="container mr-2">
-                            <i class="fas fa-users fa-4x"></i>
+                            <i class="fas fa-users fa-4x white"></i>
                         </div>
                     </div>
                     <div class="col-md-8 col-lg-9">
@@ -37,7 +22,7 @@
                 <div class="row marketing-box">
                     <div class="col-md-4 col-lg-3">
                         <div class="container ml-3">
-                            <i class="fas fa-file-chart-line fa-4x"></i>
+                            <i class="fas fa-file-chart-line fa-4x white"></i>
                         </div>
                     </div>
                     <div class="col-md-8 col-lg-9">
@@ -49,7 +34,7 @@
                 <div class="row marketing-box">
                     <div class="col-md-4 col-lg-3">
                         <div class="container ml-2">
-                            <i class="fas fa-cog fa-4x"></i>
+                            <i class="fas fa-cog fa-4x white"></i>
                         </div>
                     </div>
                     <div class="col-md-8 col-lg-9">
@@ -60,7 +45,7 @@
                 <div class="row marketing-box">
                     <div class="col-md-4 col-lg-3">
                         <div class="container ml-1">
-                            <i class="fas fa-user-check fa-4x"></i>
+                            <i class="fas fa-user-check fa-4x white"></i>
                         </div>
                     </div>
                     <div class="col-md-8 col-lg-9">
@@ -72,7 +57,7 @@
                 <div class="row marketing-box">
                     <div class="col-md-4 col-lg-3">
                         <div class="container">
-                            <i class="fas fa-chart-network fa-4x"></i>
+                            <i class="fas fa-chart-network fa-4x white"></i>
                         </div>
                     </div>
                     <div class="col-md-8 col-lg-9">
@@ -84,7 +69,7 @@
                 <div class="row marketing-box">
                     <div class="col-md-4 col-lg-3">
                         <div class="container">
-                            <i class="fas fa-cloud-download fa-4x"></i>
+                            <i class="fas fa-cloud-download fa-4x white"></i>
                         </div>
                     </div>
                     <div class="col-md-8 col-lg-9">
@@ -105,7 +90,8 @@
                             {{ form|crispy }}
                         </fieldset>
                         <div class="form-group">
-                            <button class="btn btn-danger btn-lg btn-block" type="submit">Sign up for free trial
+                            <button class="btn btn-primary btn-lg btn-block" type="submit">
+                                <i class="fas fa-badge-check"></i> Sign up for free trial
                             </button>
                         </div>
                     </form>

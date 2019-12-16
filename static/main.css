@@ -1,5 +1,11 @@
+body {
+  background: url("images/store.jpg");
+    box-shadow: inset 5000px 5000px 5000px 5000px rgba(0,0,0,0.7);
+    background-size: cover;
+}
 .bg-steel {
   background: linear-gradient(360deg, rgba(0,0,0,1) 0%, rgba(37,37,37,1) 96%, rgba(0,0,0,0.9010197829131653) 100%);
+  border-bottom: 1px solid #ffffff;
   color: black;
   font-size: 14px;
   height: 70px;
@@ -13,7 +19,7 @@
   left: 0;
   bottom: 0;
   width: 100%;
-  background:  linear-gradient(90deg, rgba(59,58,58,1) 0%, rgba(41,41,41,1) 67%, rgba(60,60,60,1) 100%);
+  background:  linear-gradient(360deg, rgba(0,0,0,1) 0%, rgba(37,37,37,1) 96%, rgba(0,0,0,0.9010197829131653) 100%);
   color: white;
   text-align: center;
   vertical-align: middle;
@@ -39,30 +45,39 @@
 .marketing-icon-box{
     margin-left: auto;
     margin-right: auto;
+        color: white;
+
 }
 .marketing-title{
     font-weight: bold;
+        color: white;
+
 }
 .marketing-text{
     font-size: 14px;
+        color: white;
+
 }
 .pull-down{
     padding: 11px 0 0 0;
     font-weight: bold;
     color: white;
 }
-.secondary-header{
-    background: linear-gradient(90deg, rgba(59,58,58,1) 0%, rgba(41,41,41,1) 67%, rgba(60,60,60,1) 100%);
-    margin-top: 60px;
-    height: 200px;
-    width: 100%;
+.register-box{
+    font-size: 14px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 2px solid #ffffff;
+    background: linear-gradient(360deg, rgba(0,0,0,1) 0%, rgba(37,37,37,1) 96%, rgba(0,0,0,0.9010197829131653) 100%);
+    color: white;
+    min-width: 300px;
 }
 .sign-up-box{
     font-size: 14px;
     padding: 10px;
     border-radius: 8px;
     border: 2px solid #cbd5db;
-    background: linear-gradient(90deg, rgba(59,58,58,1) 0%, rgba(41,41,41,1) 67%, rgba(60,60,60,1) 100%);
+    background: linear-gradient(360deg, rgba(0,0,0,1) 0%, rgba(37,37,37,1) 96%, rgba(0,0,0,0.9010197829131653) 100%);
     color: white;
     min-width: 300px;
 }

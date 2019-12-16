@@ -34,9 +34,9 @@ def tenant_register(request):
                 permission = Permission.objects.get(codename=perm)
                 manager.permissions.add(permission)
             if DEVELOPMENT:
-                return HttpResponseRedirect('//' + domain.domain + ':8000/profile')
+                return HttpResponseRedirect('//' + domain.domain + ':8000/register')
             else:
-                return HttpResponseRedirect('//' + domain.domain + '/profile')
+                return HttpResponseRedirect('//' + domain.domain + '/register')
     else:
         form = ClientForm()
     return render(request, 'clients/register.html', {'form': form})

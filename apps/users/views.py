@@ -23,7 +23,7 @@ def user_register(request):
                 user.groups.add(manager)
             else:
                 user.groups.add(team_leader)
-            phone_verify = PhoneVerification.objects.create(user=form.instance)
+            phone_verify = PhoneVerification.objects.create(user=user)
             phone_verify.save()
             form.save()
             messages.success(request, f'Your account has been created! Manager\'s '

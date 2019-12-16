@@ -1,7 +1,7 @@
 from django.db import models
 
 from apps.users.models import User
-# from configs.settings import
+from configs.settings import account_sid, auth_token, sportclips_phone
 
 from twilio.base.exceptions import TwilioRestException
 from twilio.rest import Client
@@ -21,12 +21,12 @@ class PhoneVerification(models.Model):
         self.passcode = randint(10000, 99999)
         self.save()
 
-    # def send_passcode(self, phone):
-    #     try:
-    #         client = Client(account_sid, auth_token)
-    #         client.messages.create(
-    #             body=f"Your Sportclips payroll phone verification code is: {self.passcode}",
-    #             from_=sportclips_phone,
-    #             to='1' + str(phone))
-    #     except TwilioRestException:
-    #         pass
+    def send_passcode(self, phone):
+        try:
+            client = Client(account_sid, auth_token)
+            client.messages.create(
+                body=f"Your SC payroll phone verification code is: {self.passcode}",
+                from_=sportclips_phone,
+                to='1' + str(phone))
+        except TwilioRestException:
+            pass
