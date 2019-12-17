@@ -10,7 +10,6 @@
     transition: transform 1s ease;
     transform: translateY(0px);
 }
-
 body {
   background: url("images/store1.jpg");
     box-shadow: inset 5000px 5000px 5000px 5000px rgba(0,0,0,0.7);
