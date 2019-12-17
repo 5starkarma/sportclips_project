@@ -1,11 +1,14 @@
 .alert {
     position: absolute;
+}
+.alert.boop {
+    transition: transform 1s ease;
     transform: translateY(70px);
     z-index: 900;
 }
 .alert.hide {
-    transition: transform 5s;
-    transform: translateY(-70px);
+    transition: transform 1s ease;
+    transform: translateY(0px);
 }
 
 body {
