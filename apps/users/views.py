@@ -30,7 +30,7 @@ def user_register(request):
                                       f'must accounts must be approved by Team '
                                       f'leader before login.')
             if team_leader in user.groups.all():
-                return redirect('setup-payroll')
+                return redirect('invite')
             return redirect('check-phone-verified')
     else:
         form = UserRegisterForm()

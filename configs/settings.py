@@ -53,6 +53,7 @@ TENANT_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'apps.verification',
+    'apps.invite',
 ]
 
 INSTALLED_APPS = list(set(SHARED_APPS + TENANT_APPS))

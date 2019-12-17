@@ -21,6 +21,7 @@ urlpatterns = [
 
     # include all app urls
     path('', include('apps.clients.urls')),
+    path('', include('apps.invite.urls')),
     path('', include('apps.users.urls')),
     path('', include('apps.verification.urls')),
 

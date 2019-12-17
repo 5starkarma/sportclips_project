@@ -8,6 +8,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import FormView
 
+from apps.users.models import User
 from apps.verification.forms import PhoneVerificationForm
 from apps.verification.models import PhoneVerification
 
@@ -17,7 +18,6 @@ def resend_phone_verification(request):
     pv_object, _ = PhoneVerification.objects.get_or_create(user=request.user)
     pv_object.create_new_passcode()
     pv_object.save()
-    print('phone:' + request.user.phone)
     pv_object.send_passcode(request.user.phone)
     return redirect('phone-verification')
 
@@ -26,7 +26,11 @@ def resend_phone_verification(request):
 def check_phone_verified(request):
     pv_object, _ = PhoneVerification.objects.get_or_create(user=request.user)
     if pv_object.verified:
-        return redirect('main')
+        user_count = User.objects.filter(tenant=request.tenant).count()
+        if user_count == 1:
+            return redirect('invite')
+        else:
+            return redirect('main')
     else:
         return redirect('resend-phone-verification')
 
@@ -34,7 +38,7 @@ def check_phone_verified(request):
 class PhoneVerificationView(LoginRequiredMixin, SuccessMessageMixin, FormView):
     form_class = PhoneVerificationForm
     template_name = 'phone_verify/phone_verification.html'
-    success_url = reverse_lazy('overview')
+    success_url = reverse_lazy('main')
     success_message = 'You have successfully verified your phone number!'
 
     def form_valid(self, form):

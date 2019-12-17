@@ -20,6 +20,13 @@
     <title>SportclipsPayroll.com</title>
     {% endif %}
 </head>
+{% if messages %}
+{% for message in messages %}
+<div class="col-md-12 alert alert-{{ message.tags }}" id="main-messages" style="text-align: center;">
+    {{ message }}
+</div>
+{% endfor %}
+{% endif %}
 <header class="site-header">
     <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
         <div class="container col-md-8">
@@ -51,15 +58,10 @@
     </nav>
 </header>
 <body>
-{% if messages %}
-{% for message in messages %}
-<div class="alert alert-{{ message.tags }}">
-    {{ message }}
-</div>
-{% endfor %}
-{% endif %}
 <div style="padding: 50px;">
 </div>
+
+
 {% block content %}{% endblock %}
 <!-- Footer -->
 <div class="footer mt-4">
@@ -76,5 +78,6 @@
 <script crossorigin="anonymous"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="{% static 'js/messages.js' %}"></script>
 </body>
 </html>

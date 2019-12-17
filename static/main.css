@@ -1,3 +1,13 @@
+.alert {
+    position: absolute;
+    transform: translateY(70px);
+    z-index: 900;
+}
+.alert.hide {
+    transition: transform 5s;
+    transform: translateY(-70px);
+}
+
 body {
   background: url("images/store1.jpg");
     box-shadow: inset 5000px 5000px 5000px 5000px rgba(0,0,0,0.7);
