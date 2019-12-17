@@ -11,7 +11,7 @@
     transform: translateY(0px);
 }
 body {
-  background: url("images/store1.jpg");
+    background: url("/static/images/store1.jpg");
     box-shadow: inset 5000px 5000px 5000px 5000px rgba(0,0,0,0.7);
     background-size: cover;
     background-attachment: fixed;

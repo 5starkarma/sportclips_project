@@ -27,10 +27,7 @@ def user_register(request):
             phone_verify.save()
             form.save()
             messages.success(request, f'Your account has been created! Manager\'s '
-                                      f'must accounts must be approved by Team '
-                                      f'leader before login.')
-            if team_leader in user.groups.all():
-                return redirect('invite')
+                                      f'must be approved by team leaders before login.')
             return redirect('check-phone-verified')
     else:
         form = UserRegisterForm()

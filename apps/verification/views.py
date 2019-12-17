@@ -38,7 +38,7 @@ def check_phone_verified(request):
 class PhoneVerificationView(LoginRequiredMixin, SuccessMessageMixin, FormView):
     form_class = PhoneVerificationForm
     template_name = 'phone_verify/phone_verification.html'
-    success_url = reverse_lazy('main')
+    success_url = reverse_lazy('check-phone-verified')
     success_message = 'You have successfully verified your phone number!'
 
     def form_valid(self, form):
@@ -49,4 +49,4 @@ class PhoneVerificationView(LoginRequiredMixin, SuccessMessageMixin, FormView):
             return super(PhoneVerificationView, self).form_valid(form)
         else:
             messages.warning(self.request, 'The passcode you entered was invalid.')
-            return HttpResponseRedirect(reverse_lazy('phone-verify'))
+            return HttpResponseRedirect(reverse_lazy('phone-verification'))

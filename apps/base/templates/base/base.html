@@ -9,7 +9,7 @@
     <link crossorigin="anonymous"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" rel="stylesheet">
-    <link href="{% static 'main.css' %}"
+    <link href="{% static 'css/main.css' %}"
           rel="stylesheet"
           type="text/css">
     <script crossorigin="anonymous" src="https://kit.fontawesome.com/205199a6ef.js"></script>
@@ -31,7 +31,7 @@
     <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
         <div class="container col-md-8">
             <a class="nav-item nav-link site-title"
-               href="#"
+               href="{% url 'landing' %}"
                style="text-align: center;"> Sportclips<strong>Payroll</strong>.com</a>
             <button aria-controls="navbarToggle"
                     aria-expanded="false"
@@ -48,9 +48,9 @@
                 <!-- Navbar Right Side -->
                 <div class="navbar-nav">
                     {% if user.is_authenticated %}
-                    <a class="nav-item nav-link" href="#">Logout</a>
+                    <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
                     {% else %}
-                    <a class="nav-item nav-link" href="#">Login</a>
+                    <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
                     {% endif %}
                 </div>
             </div>

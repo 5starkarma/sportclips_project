@@ -59,6 +59,7 @@ TENANT_APPS = [
 INSTALLED_APPS = list(set(SHARED_APPS + TENANT_APPS))
 
 MIDDLEWARE = [
+
     'django_tenants.middleware.main.TenantMainMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -66,7 +67,10 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'apps.users.middleware.TenantUserRedirectMiddleware',
+
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'configs.urls'
