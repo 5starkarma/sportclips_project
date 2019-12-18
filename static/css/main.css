@@ -29,6 +29,7 @@ body {
 }
 .btn{
     transition: all .1s ease-in-out;
+    border-radius: 0px;
 }
 .btn:hover{
     transform: scale(1.05);
@@ -95,7 +96,6 @@ body {
 .register-box{
     font-size: 14px;
     padding: 10px;
-    border-radius: 8px;
     border: 2px solid #ffffff;
     background: linear-gradient(360deg, rgba(0,0,0,1) 0%, rgba(37,37,37,1) 96%, rgba(0,0,0,0.9010197829131653) 100%);
     color: white;
