@@ -64,7 +64,11 @@ def process_payroll(request):
             static_removed_path = file_path.strip(settings.MEDIA_ROOT)
             Payroll(user=current_user, file=static_removed_path).save()
             Reports.objects.filter(user=request.user).delete()
-            return redirect(request, 'payroll/reports.html')
+            response = HttpResponse(open(file_path, 'rb').read())
+            response['Content-Type'] = 'mimetype/submimetype'
+            response['Content-Disposition'] = 'attachment; filename=payroll.xlsx'
+            return response
+            # return redirect(request, 'payroll/reports.html')
     return render(request, 'payroll/select-manager.html', {'m_form': m_form})
 
 
