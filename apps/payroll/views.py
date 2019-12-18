@@ -74,7 +74,7 @@ def process_payroll(request):
 
 @login_required()
 def settings_view(request):
-    instance = PayrollSettings.objects.get(id=1)
+    instance, _ = PayrollSettings.objects.get_or_create(id=1)
     if request.method == 'POST':
         form = SettingsForm(request.POST, instance=instance)
         if form.is_valid():

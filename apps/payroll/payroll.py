@@ -46,7 +46,7 @@ def prepare_stylist_analysis(df_stylist_analysis):
     df_stylist_analysis.rename(
         columns={0: 'Store', 1: 'First', 2: 'Last', 3: 'Service Clients', 4: 'Percent Request', 5: 'Neck Trims',
                  6: 'Take Home Only Clients', 7: 'Total Clients', 8: 'Service Sales', 9: 'Take Home Sales',
-                 10: 'Net Sales', 11: 'Total Hours', 12: 'Store Hours', 13: 'Non-Store Hours',
+                 10: 'Net Sales', 11: 'Total Hours', 12: 'Floor Hours', 13: 'Non-Store Hours',
                  14: 'Take Home Per Client', 15: 'Total Avg Ticket', 16: 'Service Sales Per Hour',
                  17: 'Clients Per Hour', 18: 'Number of MVPs', 19: 'Paid MVP Percent',
                  20: 'Number of Paid Triple Plays', 21: 'Paid Triple Play Percent', 22: 'Paid BB Percent',
@@ -56,24 +56,21 @@ def prepare_stylist_analysis(df_stylist_analysis):
     df_stylist_analysis['Employee'] = (df_stylist_analysis['Employee'].str.lower())
     df_stylist_analysis['Paid BB Percent'] = (df_stylist_analysis['Paid BB Percent'].astype('float') / 100)
     df_stylist_analysis_short = (
-        df_stylist_analysis.loc[:, ['Store', 'Employee',
-                                    'Total Clients', 'Clients Per Hour',
-                                    'Service Sales', 'Take Home Sales',
-                                    'Take Home Per Client', 'Service Sales Per Hour',
-                                    'Paid BB Percent', 'New Client BB']])
-    return df_stylist_analysis, df_stylist_analysis_short
+        df_stylist_analysis.loc[:, ['Store', 'Employee', 'Floor Hours', 'Total Clients', 'Clients Per Hour',
+                                    'Service Sales', 'Take Home Sales', 'Take Home Per Client',
+                                    'Service Sales Per Hour', 'Paid BB Percent', 'New Client BB']])
+
+    return df_stylist_analysis_short
 
 
 def set_pay_period(df_tips, df_stylist_analysis_short):
     df_tips['Pay Period'] = df_tips.loc[1, 1]
-    df_tips.rename(
-        columns={0: 'Employee', 3: 'Credit Tips'}, inplace=True)
+    df_tips.rename(columns={0: 'Employee', 3: 'Credit Tips'}, inplace=True)
     df_tips = df_tips.drop(df_tips.index[:6])
     df_tips = df_tips.loc[:, ['Employee', 'Credit Tips', 'Pay Period']]
     df_tips['Employee'] = df_tips['Employee'].str.lower()
     df_pay_period = df_tips.iloc[0, 2]
-    df_all_employees = pd.merge(
-        df_stylist_analysis_short, df_tips, how='left', on='Employee').fillna(0)
+    df_all_employees = pd.merge(df_stylist_analysis_short, df_tips, how='left', on='Employee').fillna(0)
     df_all_employees['Pay Period'] = df_pay_period
     return df_all_employees
 
@@ -159,6 +156,7 @@ def process_hours(df_hrs_wk1, df_hrs_wk2, df_all_employees):
     # merge data-frames
     df_all_employees = pd.merge(df_all_employees, df_hrs_wk1_final, how='outer', on='Employee').fillna(0)
     df_all_employees = pd.merge(df_all_employees, df_hrs_wk2_final, how='outer', on='Employee').fillna(0)
+
     df_all_employees['Total Hours'] = (df_all_employees['Hours1'] + df_all_employees['Hours2'])
 
     return df_all_employees
@@ -166,62 +164,115 @@ def process_hours(df_hrs_wk1, df_hrs_wk2, df_all_employees):
 
 def calculate_stylist_bonuses(df_all_employees):
     # stylist bonus settings
-    bonus_settings = PayrollSettings.objects.get(id=1)
+    bonus_settings, _ = PayrollSettings.objects.get_or_create(id=1)
 
-    star_multiplier = float(bonus_settings.star_multiplier)
+    rookie_raise = float(bonus_settings.rookie_raise)
+    rookie_thpc_min = float(bonus_settings.rookie_thpc_min)
+    rookie_bb_min = float(bonus_settings.rookie_bb_min)
+    rookie_service_min = float(bonus_settings.rookie_service_min)
+
+    rising_star_raise = float(bonus_settings.rising_star_raise)
+    rising_star_thpc_min = float(bonus_settings.rising_star_thpc_min)
+    rising_star_bb_min = float(bonus_settings.rising_star_bb_min)
+    rising_star_service_min = float(bonus_settings.rising_star_service_min)
+
+    star_raise = float(bonus_settings.star_raise)
     star_thpc_min = float(bonus_settings.star_thpc_min)
-    star_paid_bb_min = float(bonus_settings.star_paid_bb_min)
-    star_clients_per_hour_min = float(bonus_settings.star_clients_per_hour_min)
-    all_star_multiplier = float(bonus_settings.all_star_multiplier)
+    star_bb_min = float(bonus_settings.star_bb_min)
+    star_service_min = float(bonus_settings.star_service_min)
+
+    all_star_raise = float(bonus_settings.all_star_raise)
     all_star_thpc_min = float(bonus_settings.all_star_thpc_min)
-    all_star_paid_bb_min = float(bonus_settings.all_star_paid_bb_min)
-    all_star_clients_per_hour_min = float(bonus_settings.all_star_clients_per_hour_min)
-    mvp_multiplier = float(bonus_settings.mvp_multiplier)
+    all_star_bb_min = float(bonus_settings.all_star_bb_min)
+    all_star_service_min = float(bonus_settings.all_star_service_min)
+
+    mvp_raise = float(bonus_settings.mvp_raise)
     mvp_thpc_min = float(bonus_settings.mvp_thpc_min)
-    mvp_paid_bb_min = float(bonus_settings.mvp_paid_bb_min)
-    mvp_clients_per_hour_min = float(bonus_settings.mvp_clients_per_hour_min)
-    platinum_multiplier = float(bonus_settings.platinum_multiplier)
-    platinum_thpc_min = float(bonus_settings.platinum_thpc_min)
-    platinum_paid_bb_min = float(bonus_settings.platinum_paid_bb_min)
-    platinum_clients_per_hour_min = float(bonus_settings.platinum_clients_per_hour_min)
+    mvp_bb_min = float(bonus_settings.mvp_bb_min)
+    mvp_service_min = float(bonus_settings.mvp_service_min)
+
+    mvp_gold_raise = float(bonus_settings.mvp_gold_raise)
+    mvp_gold_thpc_min = float(bonus_settings.mvp_gold_thpc_min)
+    mvp_gold_bb_min = float(bonus_settings.mvp_gold_bb_min)
+    mvp_gold_service_min = float(bonus_settings.mvp_gold_service_min)
+
+    mvp_platinum_raise = float(bonus_settings.mvp_platinum_raise)
+    mvp_platinum_thpc_min = float(bonus_settings.mvp_platinum_thpc_min)
+    mvp_platinum_bb_min = float(bonus_settings.mvp_platinum_bb_min)
+    mvp_platinum_service_min = float(bonus_settings.mvp_platinum_service_min)
+
+    # take home bonus
     take_hm_bonus_lvl_1_sales_min = float(bonus_settings.take_hm_bonus_lvl_1_sales_min)
     take_hm_bonus_lvl_1_multiplier = float(bonus_settings.take_hm_bonus_lvl_1_multiplier)
     take_hm_bonus_lvl_2_sales_min = float(bonus_settings.take_hm_bonus_lvl_2_sales_min)
     take_hm_bonus_lvl_2_multiplier = float(bonus_settings.take_hm_bonus_lvl_2_multiplier)
 
-    # stylist star bonus
-    df_all_employees['Star Bonus Multiplier'] = 0.00
-    df_all_employees['Star Bonus Multiplier'][
-        (df_all_employees['Take Home Per Client']
-         >= star_thpc_min)
-        & (df_all_employees['Paid BB Percent']
-           >= star_paid_bb_min)
-        & (df_all_employees['Clients Per Hour']
-           >= star_clients_per_hour_min)] = star_multiplier
-    df_all_employees['Star Bonus Multiplier'][
-        (df_all_employees['Take Home Per Client']
-         >= all_star_thpc_min) &
-        (df_all_employees['Paid BB Percent']
-         >= all_star_paid_bb_min) &
-        (df_all_employees['Clients Per Hour'] > (
-            all_star_clients_per_hour_min))] = all_star_multiplier
-    df_all_employees['Star Bonus Multiplier'][
-        (df_all_employees['Take Home Per Client'] >= (
-            mvp_thpc_min)) &
-        (df_all_employees['Paid BB Percent'] >= (
-            mvp_paid_bb_min)) &
-        (df_all_employees['Clients Per Hour'] >= (
-            mvp_clients_per_hour_min))] = mvp_multiplier
-    df_all_employees['Star Bonus Multiplier'][
-        (df_all_employees['Take Home Per Client'] >= (
-            platinum_thpc_min)) &
-        (df_all_employees['Paid BB Percent'] >= (
-            platinum_paid_bb_min)) &
-        (df_all_employees['Clients Per Hour'] >= (
-            platinum_clients_per_hour_min))] = platinum_multiplier
-    df_all_employees['Star Bonus'] = (
-            df_all_employees['Star Bonus Multiplier'] *
-            df_all_employees['Total Hours']).round(2)
+    # stylist focus bonus
+    df_all_employees['Focus Bonus Multiplier'] = 0.00
+
+    df_all_employees['Focus Bonus Multiplier'][
+        (df_all_employees['Take Home Per Client'] >= rookie_thpc_min) &
+        (df_all_employees['Paid BB Percent'] >= rookie_bb_min) &
+        (df_all_employees['Service Sales Per Hour'] >= rookie_service_min)] = rookie_raise
+
+    df_all_employees['Focus Bonus Multiplier'][
+        (df_all_employees['Take Home Per Client'] >= rising_star_thpc_min) &
+        (df_all_employees['Paid BB Percent'] >= rising_star_bb_min) &
+        (df_all_employees['Service Sales Per Hour'] >= rising_star_service_min)] = rising_star_raise
+
+    df_all_employees['Focus Bonus Multiplier'][
+        (df_all_employees['Take Home Per Client'] >= star_thpc_min) &
+        (df_all_employees['Paid BB Percent'] >= star_bb_min) &
+        (df_all_employees['Service Sales Per Hour'] >= star_service_min)] = star_raise
+
+    df_all_employees['Focus Bonus Multiplier'][
+        (df_all_employees['Take Home Per Client'] >= all_star_thpc_min) &
+        (df_all_employees['Paid BB Percent'] >= all_star_bb_min) &
+        (df_all_employees['Service Sales Per Hour'] > all_star_service_min)] = all_star_raise
+
+    df_all_employees['Focus Bonus Multiplier'][
+        (df_all_employees['Take Home Per Client'] >= mvp_thpc_min) &
+        (df_all_employees['Paid BB Percent'] >= mvp_bb_min) &
+        (df_all_employees['Service Sales Per Hour'] >= mvp_service_min)] = mvp_raise
+
+    df_all_employees['Focus Bonus Multiplier'][
+        (df_all_employees['Take Home Per Client'] >= mvp_gold_thpc_min) &
+        (df_all_employees['Paid BB Percent'] >= mvp_gold_bb_min) &
+        (df_all_employees['Service Sales Per Hour'] >= mvp_gold_service_min)] = mvp_gold_raise
+
+    df_all_employees['Focus Bonus Multiplier'][
+        (df_all_employees['Take Home Per Client'] >= mvp_platinum_thpc_min) &
+        (df_all_employees['Paid BB Percent'] >= mvp_platinum_bb_min) &
+        (df_all_employees['Service Sales Per Hour'] >= mvp_platinum_service_min)] = mvp_platinum_raise
+
+    df_all_employees['Focus Bonus'] = (
+            df_all_employees['Focus Bonus Multiplier'] *
+            df_all_employees['Floor Hours']).round(2)
+
+    # focus bonus levels
+    df_all_employees['Focus Level'] = ''
+
+    df_all_employees['Focus Level'] = np.where(
+        df_all_employees['Focus Bonus Multiplier'] == rookie_raise,
+        'Rookie!', df_all_employees['Focus Level'])
+    df_all_employees['Focus Level'] = np.where(
+        df_all_employees['Focus Bonus Multiplier'] == rising_star_raise,
+        'Rising Star!', df_all_employees['Focus Level'])
+    df_all_employees['Focus Level'] = np.where(
+        df_all_employees['Focus Bonus Multiplier'] == star_raise,
+        'Star!', df_all_employees['Focus Level'])
+    df_all_employees['Focus Level'] = np.where(
+        df_all_employees['Focus Bonus Multiplier'] == all_star_raise,
+        'All Star!', df_all_employees['Focus Level'])
+    df_all_employees['Focus Level'] = np.where(
+        df_all_employees['Focus Bonus Multiplier'] == mvp_raise,
+        'MVP!', df_all_employees['Focus Level'])
+    df_all_employees['Focus Level'] = np.where(
+        df_all_employees['Focus Bonus Multiplier'] == mvp_gold_raise,
+        'MVP Gold!', df_all_employees['Focus Level'])
+    df_all_employees['Focus Level'] = np.where(
+        df_all_employees['Focus Bonus Multiplier'] == mvp_platinum_raise,
+        'MVP Platinum!', df_all_employees['Focus Level'])
 
     # stylist take home sales bonus
     df_all_employees['Take Home Tier'] = np.where(
@@ -241,8 +292,8 @@ def calculate_stylist_bonuses(df_all_employees):
     df_all_employees = df_all_employees[
         ['Store', 'Employee', 'Pay Period', 'Hours1', 'Hours2', 'OT1', 'OT2', 'Total Hours', 'Credit Tips',
          'Total Clients', 'Clients Per Hour', 'New Client BB', 'Take Home Sales', 'Take Home Tier',
-         'Take Home Per Client', 'Service Sales', 'Service Sales Per Hour', 'Paid BB Percent', 'Star Bonus Multiplier',
-         'Star Bonus', 'Service Bonus', 'Take Home Bonus']].fillna(0)
+         'Take Home Per Client', 'Service Sales', 'Service Sales Per Hour', 'Paid BB Percent', 'Focus Bonus Multiplier',
+         'Focus Bonus', 'Focus Level', 'Service Bonus', 'Take Home Bonus']].fillna(0)
 
     df_all_employees['OT'] = (df_all_employees['OT1'] + df_all_employees['OT2'])
     df_all_employees['Holiday'] = ''
@@ -251,27 +302,6 @@ def calculate_stylist_bonuses(df_all_employees):
     df_all_employees['Other Pay'] = ''
     df_all_employees['Season Ticket Bonus'] = ''
 
-    # star levels
-    df_all_employees['Star Level'] = 'N/A'
-    df_all_employees['Star Level'][
-        (df_all_employees['Take Home Per Client'] > 0.99) &
-        (df_all_employees['Paid BB Percent'] > 0.29)] = 'Rising Star!'
-    df_all_employees['Star Level'][
-        (df_all_employees['Take Home Per Client'] > 1.49) &
-        (df_all_employees['Paid BB Percent'] > 0.34) &
-        (df_all_employees['Clients Per Hour'] > 1.79)] = 'Star!'
-    df_all_employees['Star Level'][
-        (df_all_employees['Take Home Per Client'] > 1.74) &
-        (df_all_employees['Paid BB Percent'] > 0.39) &
-        (df_all_employees['Clients Per Hour'] > 1.99)] = 'All-Star!'
-    df_all_employees['Star Level'][
-        (df_all_employees['Take Home Per Client'] > 1.99) &
-        (df_all_employees['Paid BB Percent'] > 0.44) &
-        (df_all_employees['Clients Per Hour'] > 2.19)] = 'MVP!'
-    df_all_employees['Star Level'][
-        (df_all_employees['Take Home Per Client'] > 2.99) &
-        (df_all_employees['Paid BB Percent'] > 0.64) &
-        (df_all_employees['Clients Per Hour'] > 2.19)] = 'Platinum!'
     df_all_employees = df_all_employees[[
         'Store', 'Employee', 'Pay Period', 'Hours1', 'Hours2',
         'OT', 'Holiday', 'PTO Hours', 'Other Hours/Training',
@@ -279,16 +309,16 @@ def calculate_stylist_bonuses(df_all_employees):
         'Total Clients', 'Clients Per Hour', 'Take Home Sales',
         'Take Home Tier', 'Take Home Per Client', 'Service Sales',
         'Service Sales Per Hour', 'Paid BB Percent',
-        'Star Bonus Multiplier', 'Star Bonus', 'Service Bonus',
-        'Take Home Bonus', 'Season Ticket Bonus', 'Star Level',
+        'Focus Bonus Multiplier', 'Focus Bonus', 'Service Bonus',
+        'Take Home Bonus', 'Season Ticket Bonus', 'Focus Level',
         'New Client BB']].fillna(0)
     df_store = (
         df_all_employees[['Store', 'Employee', 'Pay Period', 'Hours1',
                           'Hours2', 'Total Hours', 'OT', 'Holiday',
                           'PTO Hours', 'Other Hours/Training',
                           'Credit Tips', 'Other Pay', 'Service Bonus',
-                          'Take Home Bonus', 'Star Bonus',
-                          'Season Ticket Bonus', 'Star Level']])
+                          'Take Home Bonus', 'Focus Bonus',
+                          'Season Ticket Bonus', 'Focus Level']])
     df_all_employees['Client Excitement'] = ''
     df_all_employees['Client Retention'] = ''
     df_all_employees['Return Retention'] = ''
@@ -312,12 +342,12 @@ def calculate_manager_bonuses(df_all_employees, man_name, df_store):
     df_manager['Manager Service Diff'] = (df_manager['Service Sales'] - df_manager['Service Breakpoint'])
     df_manager['Store BB Percent'] = df_all_employees.iloc[-1, 19]
     df_manager['Service Bonus'] = (df_manager['Store BB Percent'] * df_manager['Manager Service Diff']).round(2)
-    df_manager['Star Bonus'] = 0
+    df_manager['Focus Bonus'] = 0
 
     df_manager = df_manager[[
         'Store', 'Pay Period', 'Employee', 'Hours1', 'Hours2', 'Total Hours', 'OT', 'Holiday', 'PTO Hours',
         'Other Hours/Training', 'Credit Tips', 'Other Pay', 'Service Bonus', 'Take Home Bonus', 'Take Home Per Client',
-        'Paid BB Percent', 'Star Bonus', 'Season Ticket Bonus', 'Star Level']]
+        'Paid BB Percent', 'Focus Bonus', 'Season Ticket Bonus', 'Focus Level']]
 
     # manager service bonus
     df_manager['Service Bonus'] = np.where(
@@ -346,7 +376,7 @@ def calculate_manager_bonuses(df_all_employees, man_name, df_store):
         df_store['Total Hours'].sum(), df_store['OT'].sum(), '', '', '',
         df_store['Credit Tips'].sum(), '',
         df_store['Service Bonus'].sum(), df_store['Take Home Bonus'].sum(),
-        df_store['Star Bonus'].sum(), '', '']
+        df_store['Focus Bonus'].sum(), '', '']
     return df_store
 
 
@@ -536,7 +566,7 @@ def write_data_to_excel_file(df_1on1_5, df_store, df_1on1):
         (row_len + 1), 8, chart_clients_per_hr, {
             'x_scale': .7, 'y_scale': 1.5})
 
-    payroll_sheet.insert_image('O22', 'static/images/1.png')
+    payroll_sheet.insert_image('L22', 'static/images/1.png')
     one_on_one_sheet.insert_image('J44', 'static/images/1.png')
 
     writer.save()
@@ -546,8 +576,7 @@ def write_data_to_excel_file(df_1on1_5, df_store, df_1on1):
 
 def run_payroll(man_name):
     df_stylist_analysis, df_tips, df_hours1, df_hours2, df_retention, df_efficiency = read_excel_files()
-    df_processed_sar, df_processed_sar_short = prepare_stylist_analysis(df_stylist_analysis)
-    df_processed_all_employees = set_pay_period(df_tips, df_processed_sar_short)
+    df_processed_all_employees = set_pay_period(df_tips, prepare_stylist_analysis(df_stylist_analysis))
     df_employees_and_hours = process_hours(df_hours1, df_hours2, df_processed_all_employees)
     df_employees_and_bonuses, df_store = calculate_stylist_bonuses(df_employees_and_hours)
     df_processed_store = calculate_manager_bonuses(df_employees_and_bonuses, man_name, df_store)
