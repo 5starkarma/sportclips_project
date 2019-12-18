@@ -1,5 +1,8 @@
 .alert {
     position: absolute;
+    background-color: #007bff;
+    color: white !important;
+    border: white;
 }
 .alert.boop {
     transition: transform 1s ease;

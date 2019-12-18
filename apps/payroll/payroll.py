@@ -346,7 +346,7 @@ def calculate_manager_bonuses(df_all_employees, man_name, df_store):
 
     df_manager = df_manager[[
         'Store', 'Pay Period', 'Employee', 'Hours1', 'Hours2', 'Total Hours', 'OT', 'Holiday', 'PTO Hours',
-        'Other Hours/Training', 'Credit Tips', 'Other Pay', 'Service Bonus', 'Take Home Bonus', 'Take Home Per Client',
+        'Other Hours/Training', 'Other Pay', 'Credit Tips', 'Service Bonus', 'Take Home Bonus', 'Take Home Per Client',
         'Paid BB Percent', 'Focus Bonus', 'Season Ticket Bonus', 'Focus Level']]
 
     # manager service bonus
@@ -377,6 +377,8 @@ def calculate_manager_bonuses(df_all_employees, man_name, df_store):
         df_store['Credit Tips'].sum(), '',
         df_store['Service Bonus'].sum(), df_store['Take Home Bonus'].sum(),
         df_store['Focus Bonus'].sum(), '', '']
+    df_store = df_store.drop(columns=['Season Ticket Bonus'])
+
     return df_store
 
 
