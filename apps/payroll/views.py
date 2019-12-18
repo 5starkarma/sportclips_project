@@ -54,7 +54,6 @@ class PayrollListView(LoginRequiredMixin, ListView):
 
 @login_required
 def process_payroll(request):
-    m_form = ManagerForm(request.POST)
     if request.method == 'POST':
         m_form = ManagerForm(request.POST)
         if m_form.is_valid():
@@ -68,7 +67,8 @@ def process_payroll(request):
             response['Content-Type'] = 'mimetype/submimetype'
             response['Content-Disposition'] = 'attachment; filename=payroll.xlsx'
             return response
-            # return redirect(request, 'payroll/reports.html')
+    else:
+        m_form = ManagerForm()
     return render(request, 'payroll/select-manager.html', {'m_form': m_form})
 
 

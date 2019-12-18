@@ -23,7 +23,7 @@ class ManagerForm(forms.Form):
     manager = forms.ChoiceField(choices=[], widget=forms.RadioSelect)
 
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+        super(ManagerForm, self).__init__(*args, **kwargs)
         self.fields['manager'].choices = get_employee_names()
 
 
