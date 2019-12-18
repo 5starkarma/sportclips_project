@@ -1,0 +1,20 @@
+{% extends "base/user-panel.html" %}
+{% load crispy_forms_tags %}
+{% block panel %}
+
+
+<div class="col-md-9">
+    <div class="register-box">
+        <div class="container">
+            <h2 class="sign-up-title mt-4"><i class="fas fa-user-cowboy"></i> Select manager</h2>
+            <p>Select the manager of the store.</p>
+            <form class="post-form" method="post">
+                {% csrf_token %}
+                {{ m_form|crispy }}
+                <button class="save btn btn-primary btn-lg" type="submit">Run Payroll</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock panel %}>

@@ -1,0 +1,41 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="container col-md-8">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="register-box">
+                <div class="container mb-4">
+                    <h2 class="sign-up-title mt-4 mb-4"><i class="fas fa-cog"></i> Management</h2>
+                    <button class="btn btn-default btn-lg btn-block" type="submit">
+                        <i class="fas fa-users"></i> Users
+                    </button>
+                    <button class="btn btn-default btn-lg btn-block" type="submit">
+                        <i class="fas fa-sms"></i> Invite
+                    </button>
+                    <button class="btn btn-default btn-lg btn-block" type="submit">
+                        <i class="fas fa-file-excel"></i> Payrolls
+                    </button>
+                    <button class="btn btn-default btn-lg btn-block" type="submit">
+                        <i class="fas fa-user-astronaut"></i> Profile
+                    </button>
+                    <button class="btn btn-default btn-lg btn-block" type="submit">
+                        <i class="fas fa-envelope-open-dollar"></i> Billing
+                    </button>
+                    <button class="btn btn-default btn-lg btn-block" type="submit">
+                        <i class="fas fa-tools"></i> Settings
+                    </button>
+                    <a class="btn btn-primary btn-lg btn-block" href="{% url 'upload' %}">
+                        <i class="fas fa-file-invoice-dollar"></i> Begin payroll
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% block panel %}
+        {% endblock panel %}
+    </div>
+</div>
+
+{% endblock content %}

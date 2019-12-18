@@ -1,0 +1,22 @@
+{% extends "base/user-panel.html" %}
+{% load crispy_forms_tags %}
+{% block panel %}
+
+
+<div class="col-md-9">
+    <div class="register-box">
+        <div class="container">
+            <h2 class="sign-up-title mt-4"><i class="fas fa-file-upload"></i> Upload reports</h2>
+            <p>Upload the reports. They can be either .xlsx or .xls format and are found at Salon Ultimate.</p>
+            <form enctype="multipart/form-data" method="POST">
+                {% csrf_token %}
+                {{ upload_form|crispy }}
+                <button class="btn btn-primary btn-lg" type="submit">
+                    <i class="fas fa-user-tag"></i> Next: select manager</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{% endblock panel %}>
