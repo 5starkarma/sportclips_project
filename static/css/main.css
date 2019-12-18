@@ -37,6 +37,9 @@ body {
 .btn:hover{
     transform: scale(1.05);
 }
+.btn-default{
+    background-color: #fff;
+}
 .btn-default:hover{
     background-color: #007bff;
     color: white;
@@ -56,6 +59,9 @@ body {
 }
 .form-check-label{
     color: white;
+}
+.form-control{
+    border-radius: 0;
 }
 .header-title{
     padding-top: 80px;
