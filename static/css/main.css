@@ -27,9 +27,16 @@ body {
     border-top: 2px solid #cbd5db;
     height: 50px;
 }
+.btn{
+    transition: all .1s ease-in-out;
+}
+.btn:hover{
+    transform: scale(1.05);
+}
 .btn-default:hover{
     background-color: #007bff;
     color: white;
+    transform: scale(1.1);
 }
 .footer {
   position: fixed;

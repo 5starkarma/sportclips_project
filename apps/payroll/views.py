@@ -80,7 +80,7 @@ def settings_view(request):
         if form.is_valid():
             form.save()
             messages.success(request, f'Your settings have been updated!')
-            return redirect('payroll')
+            return redirect('upload')
     else:
         form = SettingsForm(instance=instance)
     context = {'form': form}
