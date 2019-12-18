@@ -30,7 +30,7 @@ def check_phone_verified(request):
         if user_count == 1:
             return redirect('invite')
         else:
-            return redirect('main')
+            return redirect('upload')
     else:
         return redirect('resend-phone-verification')
 
