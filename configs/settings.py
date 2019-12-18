@@ -46,6 +46,7 @@ SHARED_APPS = [
     'django.contrib.sessions',
     'django.contrib.staticfiles',
     'django.contrib.contenttypes',
+    'django_cleanup',
 ]
 
 TENANT_APPS = [
@@ -54,7 +55,7 @@ TENANT_APPS = [
     'django.contrib.messages',
     'apps.invite',
     'apps.payroll',
-    'apps.verification',
+    'apps.verification'
 ]
 
 INSTALLED_APPS = list(set(SHARED_APPS + TENANT_APPS))

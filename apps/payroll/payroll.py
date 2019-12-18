@@ -164,14 +164,10 @@ def process_hours(df_hrs_wk1, df_hrs_wk2, df_all_employees):
     return df_all_employees
 
 
-def calculate_stylist_bonuses(df_all_employees, df_stylist_analysis):
+def calculate_stylist_bonuses(df_all_employees):
     # stylist bonus settings
     bonus_settings = PayrollSettings.objects.get(id=1)
 
-    service_bonus_sales_min = float(bonus_settings.service_bonus_sales_min)
-    service_bonus_cap = float(bonus_settings.service_bonus_cap)
-    service_bonus_take_home_sales_min = float(bonus_settings.service_bonus_take_home_sales_min)
-    service_bonus_paid_bb_min = float(bonus_settings.service_bonus_paid_bb_min)
     star_multiplier = float(bonus_settings.star_multiplier)
     star_thpc_min = float(bonus_settings.star_thpc_min)
     star_paid_bb_min = float(bonus_settings.star_paid_bb_min)
@@ -192,26 +188,6 @@ def calculate_stylist_bonuses(df_all_employees, df_stylist_analysis):
     take_hm_bonus_lvl_1_multiplier = float(bonus_settings.take_hm_bonus_lvl_1_multiplier)
     take_hm_bonus_lvl_2_sales_min = float(bonus_settings.take_hm_bonus_lvl_2_sales_min)
     take_hm_bonus_lvl_2_multiplier = float(bonus_settings.take_hm_bonus_lvl_2_multiplier)
-
-    # stylist service bonus
-    df_all_employees['Service Bonus'] = (
-            (df_all_employees['Service Sales Per Hour'] -
-             service_bonus_sales_min) *
-            (df_all_employees['Paid BB Percent'] *
-             df_stylist_analysis['Store Hours'])).round(2)
-    df_all_employees['Service Bonus'] = np.where(
-        (df_all_employees['Service Bonus'])
-        > service_bonus_cap, service_bonus_cap,
-        (df_all_employees['Service Bonus'])).round(2)
-    df_all_employees['Service Bonus'] = np.where(
-        (df_all_employees['Service Bonus']) < 0.01, 0,
-        (df_all_employees['Service Bonus'])).round(2)
-    df_all_employees['Service Bonus'] = np.where(
-        (df_all_employees['Take Home Sales']) <
-        service_bonus_take_home_sales_min, 0, np.where(
-        df_all_employees['Paid BB Percent'] <
-        service_bonus_paid_bb_min, 0,
-        df_all_employees['Service Bonus']).round(2))
 
     # stylist star bonus
     df_all_employees['Star Bonus Multiplier'] = 0.00
@@ -259,6 +235,8 @@ def calculate_stylist_bonuses(df_all_employees, df_stylist_analysis):
             df_all_employees['Take Home Tier'] * (
         df_all_employees['Take Home Sales']).round(2))
     df_all_employees['Take Home Bonus'] = df_all_employees['Take Home Bonus'].round(2)
+
+    df_all_employees['Service Bonus'] = 0
 
     df_all_employees = df_all_employees[
         ['Store', 'Employee', 'Pay Period', 'Hours1', 'Hours2', 'OT1', 'OT2', 'Total Hours', 'Credit Tips',
@@ -558,8 +536,8 @@ def write_data_to_excel_file(df_1on1_5, df_store, df_1on1):
         (row_len + 1), 8, chart_clients_per_hr, {
             'x_scale': .7, 'y_scale': 1.5})
 
-    payroll_sheet.insert_image('O22', 'media/1.png')
-    one_on_one_sheet.insert_image('J44', 'media/1.png')
+    payroll_sheet.insert_image('O22', 'static/images/1.png')
+    one_on_one_sheet.insert_image('J44', 'static/images/1.png')
 
     writer.save()
     workbook.close()
@@ -571,7 +549,7 @@ def run_payroll(man_name):
     df_processed_sar, df_processed_sar_short = prepare_stylist_analysis(df_stylist_analysis)
     df_processed_all_employees = set_pay_period(df_tips, df_processed_sar_short)
     df_employees_and_hours = process_hours(df_hours1, df_hours2, df_processed_all_employees)
-    df_employees_and_bonuses, df_store = calculate_stylist_bonuses(df_employees_and_hours, df_processed_sar)
+    df_employees_and_bonuses, df_store = calculate_stylist_bonuses(df_employees_and_hours)
     df_processed_store = calculate_manager_bonuses(df_employees_and_bonuses, man_name, df_store)
     df_processed_1on1, df_second_1on1 = process_one_on_one(df_employees_and_bonuses, df_retention, df_efficiency)
     file_path = write_data_to_excel_file(df_processed_1on1, df_processed_store, df_second_1on1)
