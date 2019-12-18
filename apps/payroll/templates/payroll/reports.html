@@ -1,0 +1,19 @@
+{% extends "base/user-panel.html" %}
+{% load tz %}
+{% block panel %}
+
+<div class="col-md-9">
+    <div class="register-box">
+        <div class="container">
+            <h2 class="sign-up-title mt-4"><i class="fas fa-cloud-download"></i> Download past reports</h2>
+            <p>Select a report to download the file.</p>
+            {% for report in reports %}
+            {% timezone "US/Pacific" %}
+            <a class="btn btn-default btn-lg mt-2" href="{{ payroll.file.url }}">{{ report.date_time }}</a><h4>{{ report.user }}</h4>
+            {% endtimezone %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock panel %}

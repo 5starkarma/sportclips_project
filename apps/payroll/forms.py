@@ -28,7 +28,6 @@ class ManagerForm(forms.Form):
 
 
 class SettingsForm(forms.ModelForm):
-
     class Meta:
         model = PayrollSettings
         fields = [
