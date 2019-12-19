@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponse
@@ -67,7 +67,8 @@ def process_payroll(request):
     return render(request, 'payroll/select-manager.html', {'m_form': m_form})
 
 
-@login_required()
+@login_required
+@permission_required('payroll.change_user', raise_exception=True)
 def settings_view(request):
     instance, _ = PayrollSettings.objects.get_or_create(id=1)
     if request.method == 'POST':
@@ -82,7 +83,7 @@ def settings_view(request):
     return render(request, 'payroll/settings.html', context)
 
 
-@login_required()
+@login_required
 def download_payroll(request, pk):
     payroll = get_object_or_404(Payroll, pk=pk)
     filepath = settings.MEDIA_ROOT + '/payroll' + payroll.file.url.replace('/media/', '')

@@ -1,4 +1,4 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 
@@ -6,11 +6,13 @@ from apps.invite.forms import InviteForm
 from django.views.generic.edit import FormView
 
 
-class InviteView(LoginRequiredMixin, SuccessMessageMixin, FormView):
+class InviteView(LoginRequiredMixin, PermissionRequiredMixin, SuccessMessageMixin, FormView):
     template_name = 'invite/invite_form.html'
     form_class = InviteForm
     success_url = reverse_lazy('invite')
     success_message = "An SMS invite has been sent."
+    permission_required = ('payroll.change_user',)
+    permission_denied_message = 'User does not have permissions to invite users.'
 
     def get_initial(self):
         initial = super(InviteView, self).get_initial()

@@ -37,10 +37,12 @@ def user_register(request):
     return render(request, 'users/user_form.html', {'form': form})
 
 
-class UserListView(LoginRequiredMixin, SuccessMessageMixin, ListView):
+class UserListView(LoginRequiredMixin, PermissionRequiredMixin, SuccessMessageMixin, ListView):
     model = User
     template_name = 'users/user_list.html'
     # paginate_by = 6
+    permission_required = ('payroll.change_user',)
+    permission_denied_message = 'User does not have permissions to change user accounts.'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
