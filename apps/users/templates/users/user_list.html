@@ -26,13 +26,13 @@
                     </td>
                     <td style="text-align: right;">
                         {% if user.is_active %}
-                        <form action="" method="POST">{% csrf_token %}
+                        <form class="no-mb" action="" method="POST">{% csrf_token %}
                             <input name="status" type=hidden value="{{ user.id }}">
                             <button class="btn btn-default btn-sm" type="submit">
                                 <i class="fas fa-check"></i> Active</button>
                         </form>
                         {% else %}
-                        <form action="" method="POST">{% csrf_token %}
+                        <form class="no-mb" action="" method="POST">{% csrf_token %}
                             <input name="status" type=hidden value="{{ user.id }}">
                             <button class="btn btn-danger btn-sm" type="submit">
                                 <i class="fas fa-times-circle"></i> Inactive</button>

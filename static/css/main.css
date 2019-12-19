@@ -94,6 +94,10 @@ body {
     font-size: 14px;
         color: white;
 }
+.no-mb{
+    margin-block-end: 0!important;
+    padding-bottom: 0;
+}
 .primary{
     color: #007bff;
 }
@@ -142,9 +146,6 @@ body {
 }
 .table{
     background-color: rgba(37,37,37,1);
-}
-.align-right{
-    text-align: right;
 }
 .white{
     color: white;
