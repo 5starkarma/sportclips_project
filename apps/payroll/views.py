@@ -46,11 +46,6 @@ class PayrollListView(LoginRequiredMixin, ListView):
     context_object_name = 'reports'
     ordering = '-date_time'
 
-    def get_queryset(self):
-        queryset = super(PayrollListView, self).get_queryset()
-        queryset = queryset.filter(user=self.request.user)
-        return queryset
-
 
 @login_required
 def process_payroll(request):
