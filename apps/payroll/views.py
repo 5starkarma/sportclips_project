@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import ListView
@@ -88,8 +88,10 @@ def settings_view(request):
 
 
 @login_required()
-def download_payroll(request):
-    response = HttpResponse(open(file_path, 'rb').read())
+def download_payroll(request, pk):
+    payroll = get_object_or_404(Payroll, pk=pk)
+    filepath = settings.MEDIA_ROOT + '/payroll' + payroll.file.url.replace('/media/', '')
+    response = HttpResponse(open(filepath, 'rb').read())
     response['Content-Type'] = 'mimetype/submimetype'
     response['Content-Disposition'] = 'attachment; filename=payroll.xlsx'
     return response

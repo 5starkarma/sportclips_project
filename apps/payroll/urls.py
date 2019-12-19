@@ -6,4 +6,5 @@ urlpatterns = [
     path('upload/', payroll_views.FileUploadView.as_view(), name='upload'),
     path('select-manager/', payroll_views.process_payroll, name='select-manager'),
     path('settings/', payroll_views.settings_view, name='settings'),
+    path('<int:pk>/download/', payroll_views.download_payroll, name='download'),
 ]

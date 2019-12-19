@@ -38,7 +38,7 @@ body {
     transform: scale(1.05);
 }
 .btn-default{
-    background-color: #fff;
+    background-color: white;
 }
 .btn-default:hover{
     background-color: #007bff;
@@ -139,6 +139,9 @@ body {
 .site-title{
     font-size: 18px;
     color: white !important;
+}
+.table{
+    background-color: rgba(37,37,37,1);
 }
 .white{
     color: white;

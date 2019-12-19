@@ -9,7 +9,29 @@
             <p>Select a report to download the file.</p>
             {% for report in reports %}
             {% timezone "US/Pacific" %}
-            <a class="btn btn-default btn-lg mt-2" href="{{ payroll.file.url }}">{{ report.date_time }}</a><h4>{{ report.user }}</h4>
+            <table class="table table-dark">
+                <thead>
+                <tr>
+                    <th>Report date</th>
+                    <th>Ran by</th>
+                    <th>Download</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        {{ report.date_time }}
+                    </td>
+                    <td>
+                        {{ report.user }}
+                    </td>
+                    <td>
+                        <button class="btn btn-default btn-sm"
+                                onclick="location.href='{% url 'download' report.id %}'">Download</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
             {% endtimezone %}
             {% endfor %}
         </div>
