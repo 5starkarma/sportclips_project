@@ -143,6 +143,9 @@ body {
 .table{
     background-color: rgba(37,37,37,1);
 }
+.align-right{
+    text-align: right;
+}
 .white{
     color: white;
 }

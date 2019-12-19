@@ -16,3 +16,10 @@ class User(AbstractUser):
         on_delete=models.CASCADE,
         blank=True,
         null=True)
+
+    def change_active_status(self):
+        if self.is_active:
+            self.is_active = False
+        else:
+            self.is_active = True
+        self.save()

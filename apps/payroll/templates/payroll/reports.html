@@ -14,7 +14,7 @@
                 <tr>
                     <th>Report date</th>
                     <th>Ran by</th>
-                    <th>Download</th>
+                    <th style="text-align: right;">Download</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -23,11 +23,12 @@
                         {{ report.date_time }}
                     </td>
                     <td>
-                        {{ report.user }}
+                        {{ report.user.get_full_name }}
                     </td>
-                    <td>
+                    <td style="text-align: right;">
                         <button class="btn btn-default btn-sm"
-                                onclick="location.href='{% url 'download' report.id %}'">Download</button>
+                                onclick="location.href='{% url 'download' report.id %}'">
+                            <i class="fas fa-cloud-download"></i> Download</button>
                     </td>
                 </tr>
                 </tbody>

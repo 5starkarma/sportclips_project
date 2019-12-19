@@ -1,6 +1,9 @@
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.models import Group
+from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render, redirect
+from django.views.generic import ListView, DetailView
 
 from apps.users.forms import UserRegisterForm
 from apps.users.models import User
@@ -32,6 +35,24 @@ def user_register(request):
     else:
         form = UserRegisterForm()
     return render(request, 'users/user_form.html', {'form': form})
+
+
+class UserListView(LoginRequiredMixin, SuccessMessageMixin, ListView):
+    model = User
+    template_name = 'users/user_list.html'
+    # paginate_by = 6
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user_list'] = User.objects.filter(tenant=self.request.tenant)
+        return context
+
+    def post(self, request, *args, **kwargs):
+        user_id = request.POST.get('status')
+        if user_id:
+            user = User.objects.get(id=user_id)
+            user.change_active_status()
+        return self.get(request)
 
 
 
