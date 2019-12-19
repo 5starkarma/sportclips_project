@@ -51,7 +51,10 @@ class UserListView(LoginRequiredMixin, SuccessMessageMixin, ListView):
         user_id = request.POST.get('status')
         if user_id:
             user = User.objects.get(id=user_id)
-            user.change_active_status()
+            if user == request.user:
+                pass
+            else:
+                user.change_active_status()
         return self.get(request)
 
 
