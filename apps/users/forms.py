@@ -57,3 +57,17 @@ class UserRegisterForm(UserCreationForm):
         widgets = {
             'tenant': forms.HiddenInput()
         }
+
+
+class UserUpdateForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = [
+            'username',
+            'first_name',
+            'last_name',
+            'email',
+            'phone',
+            'sms_notifications',
+            'email_notifications',
+        ]

@@ -3,9 +3,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from django.contrib.auth.models import Group
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render, redirect
-from django.views.generic import ListView, DetailView
+from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView, UpdateView
 
-from apps.users.forms import UserRegisterForm
+from apps.users.forms import UserRegisterForm, UserUpdateForm
 from apps.users.models import User
 from apps.verification.models import PhoneVerification
 
@@ -60,5 +61,14 @@ class UserListView(LoginRequiredMixin, PermissionRequiredMixin, SuccessMessageMi
         return self.get(request)
 
 
+class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    model = User
+    form_class = UserUpdateForm
+    template_name = 'users/user_update_form.html'
+    success_message = 'Your profile has been updated!'
+    success_url = reverse_lazy('profile')
+
+    def get_object(self, queryset=None):
+        return self.request.user
 
 
