@@ -4,20 +4,144 @@
 
 
 <div class="col-md-9">
-    <div class="register-box">
+    <div class="register-box mb-4">
         <div class="container">
             <h2 class="sign-up-title mt-4"><i class="fas fa-tools"></i> Payroll settings</h2>
-            <p>The payroll thresholds can be adjusted here.</p>
+            <p>Adjust payroll settings here.</p>
             <form enctype="multipart/form-data" method="POST">
                 {% csrf_token %}
                 <fieldset class="form-group">
-                    <h4 class="sign-up-title mt-4">Manager bonus</h4>
+                    <h4 class="sign-up-title mt-2">Manager bonus thresholds</h4>
                     <div class="form-row">
-                        <div class="form-group col-md-8 mb-0">
+                        <div class="form-group col-md-6 mb-0">
                             {{ form.manager_service_breakpoint|as_crispy_field }}
                         </div>
-                        <div class="form-group col-md-4 mb-0">
+                        <div class="form-group col-md-6 mb-0">
                             {{ form.manager_service_bonus_cap|as_crispy_field }}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6 mb-0">
+                            {{ form.manager_service_bonus_paid_bb_min|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-md-6 mb-0">
+                            {{ form.manager_service_bonus_thpc_min|as_crispy_field }}
+                        </div>
+                    </div>
+                    <h4 class="sign-up-title mt-2">Stylist focus bonus thresholds</h4>
+                    <div class="form-row">
+                        <div class="form-group col-md-3 mb-0">
+                            {{ form.rookie_raise|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-md-3 mb-0">
+                            {{ form.rookie_thpc_min|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-md-3 mb-0">
+                            {{ form.rookie_bb_min|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-md-3 mb-0">
+                            {{ form.rookie_service_min|as_crispy_field }}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-3 mb-0">
+                            {{ form.rising_star_raise|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-md-3 mb-0">
+                            {{ form.rising_star_thpc_min|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-md-3 mb-0">
+                            {{ form.rising_star_bb_min|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-md-3 mb-0">
+                            {{ form.rising_star_service_min|as_crispy_field }}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-3 mb-0">
+                            {{ form.star_raise|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-md-3 mb-0">
+                            {{ form.star_thpc_min|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-md-3 mb-0">
+                            {{ form.star_bb_min|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-md-3 mb-0">
+                            {{ form.star_service_min|as_crispy_field }}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-3 mb-0">
+                            {{ form.all_star_raise|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-md-3 mb-0">
+                            {{ form.all_star_thpc_min|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-md-3 mb-0">
+                            {{ form.all_star_bb_min|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-md-3 mb-0">
+                            {{ form.all_star_service_min|as_crispy_field }}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-3 mb-0">
+                            {{ form.mvp_raise|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-md-3 mb-0">
+                            {{ form.mvp_thpc_min|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-md-3 mb-0">
+                            {{ form.mvp_bb_min|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-md-3 mb-0">
+                            {{ form.mvp_service_min|as_crispy_field }}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-3 mb-0">
+                            {{ form.mvp_gold_raise|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-md-3 mb-0">
+                            {{ form.mvp_gold_thpc_min|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-md-3 mb-0">
+                            {{ form.mvp_gold_bb_min|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-md-3 mb-0">
+                            {{ form.mvp_gold_service_min|as_crispy_field }}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-3 mb-0">
+                            {{ form.mvp_platinum_raise|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-md-3 mb-0">
+                            {{ form.mvp_platinum_thpc_min|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-md-3 mb-0">
+                            {{ form.mvp_platinum_bb_min|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-md-3 mb-0">
+                            {{ form.mvp_platinum_service_min|as_crispy_field }}
+                        </div>
+                    </div>
+                    <h4 class="sign-up-title mt-2">Stylist take home bonus thresholds</h4>
+                    <div class="form-row">
+                        <div class="form-group col-md-6 mb-0">
+                            {{ form.take_hm_bonus_lvl_1_sales_min|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-md-6 mb-0">
+                            {{ form.take_hm_bonus_lvl_1_multiplier|as_crispy_field }}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6 mb-0">
+                            {{ form.take_hm_bonus_lvl_2_sales_min|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-md-6 mb-0">
+                            {{ form.take_hm_bonus_lvl_2_multiplier|as_crispy_field }}
                         </div>
                     </div>
                 </fieldset>

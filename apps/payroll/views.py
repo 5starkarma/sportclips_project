@@ -79,7 +79,7 @@ def settings_view(request):
         form = SettingsForm(request.POST, instance=instance)
         if form.is_valid():
             form.save()
-            messages.success(request, f'Your settings have been updated!')
+            messages.success(request, f'Payroll settings have been saved!')
             return redirect('upload')
     else:
         form = SettingsForm(instance=instance)

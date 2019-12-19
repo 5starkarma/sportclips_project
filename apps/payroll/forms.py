@@ -38,6 +38,7 @@ class SettingsForm(forms.ModelForm):
             'star_raise', 'star_thpc_min', 'star_bb_min', 'star_service_min',
             'all_star_raise', 'all_star_thpc_min', 'all_star_bb_min', 'all_star_service_min',
             'mvp_raise', 'mvp_thpc_min', 'mvp_bb_min', 'mvp_service_min',
+            'mvp_gold_raise', 'mvp_gold_thpc_min', 'mvp_gold_bb_min', 'mvp_gold_service_min',
             'mvp_platinum_raise', 'mvp_platinum_thpc_min', 'mvp_platinum_bb_min', 'mvp_platinum_service_min',
             'take_hm_bonus_lvl_1_sales_min', 'take_hm_bonus_lvl_1_multiplier',
             'take_hm_bonus_lvl_2_sales_min', 'take_hm_bonus_lvl_2_multiplier',
