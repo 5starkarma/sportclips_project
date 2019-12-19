@@ -3,6 +3,7 @@ from datetime import datetime
 from django.utils.dateformat import DateFormat
 from pytz import timezone
 
+from .excel_factory import extract_data_from
 from .models import PayrollSettings, Reports
 
 import numpy as np
@@ -436,6 +437,8 @@ def write_data_to_excel_file(df_1on1_5, df_store, df_1on1):
     df_store.to_excel(writer, index=False, sheet_name=payroll)
     df_1on1_5.to_excel(writer, index=False, sheet_name=one_on_one)
     workbook = writer.book
+    # for employee in df_1on1_5['Employee']:
+    #     workbook.add_worksheet(employee)
 
     payroll_sheet = writer.sheets[payroll]
     one_on_one_sheet = writer.sheets[one_on_one]
@@ -514,13 +517,13 @@ def write_data_to_excel_file(df_1on1_5, df_store, df_1on1):
         'type': 'cell', 'criteria': 'less than',
         'value': 100, 'format': per_format})
 
-    for row in range(0, number_rows + 1, 2):
+    for row in range(0, number_rows, 2):
         payroll_sheet.set_row(row, cell_format=data_format1)
         payroll_sheet.set_row(row + 1, cell_format=data_format2)
         payroll_sheet.write(row, 0, None)
         payroll_sheet.write(row + 1, 0, None)
 
-    for row in range(0, row_len + 1, 2):
+    for row in range(0, row_len, 2):
         one_on_one_sheet.set_row(row, cell_format=data_format1)
         one_on_one_sheet.set_row(row + 1, cell_format=data_format2)
         one_on_one_sheet.write(row, 0, None)
