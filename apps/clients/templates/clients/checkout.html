@@ -1,0 +1,21 @@
+{% extends "base/user-panel.html" %}
+{% load crispy_forms_tags %}
+{% block panel %}
+
+<script src="https://js.stripe.com/v3/"></script>
+
+<div class="col-md-9">
+    <div class="register-box mb-4">
+        <div class="container">
+            <h2 class="sign-up-title mt-4"><i class="fas fa-envelope-open-dollar"></i> Billing coming soon..</h2>
+        </div>
+    </div>
+</div>
+
+
+// Set your publishable key: remember to change this to your live publishable key in production
+// See your keys here: https://dashboard.stripe.com/account/apikeys
+var stripe = Stripe('pk_test_xJfsgtm6DE4feoGEUoLMBgMm');
+var elements = stripe.elements();
+
+{% endblock %}

@@ -46,16 +46,13 @@ SHARED_APPS = [
     'django.contrib.sessions',
     'django.contrib.staticfiles',
     'django.contrib.contenttypes',
-    'django_cleanup',
 ]
 
 TENANT_APPS = [
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
     'apps.invite',
     'apps.payroll',
-    'apps.verification'
+    'apps.verification',
+    'django_cleanup',
 ]
 
 INSTALLED_APPS = list(set(SHARED_APPS + TENANT_APPS))
@@ -69,6 +66,7 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+
     'apps.users.middleware.TenantUserRedirectMiddleware',
 
     'django.middleware.clickjacking.XFrameOptionsMiddleware',

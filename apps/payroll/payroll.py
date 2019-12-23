@@ -523,7 +523,7 @@ def write_data_to_excel_file(df_1on1_5, df_store, df_1on1):
         payroll_sheet.write(row, 0, None)
         payroll_sheet.write(row + 1, 0, None)
 
-    for row in range(0, row_len, 2):
+    for row in range(0, row_len + 1, 2):
         one_on_one_sheet.set_row(row, cell_format=data_format1)
         one_on_one_sheet.set_row(row + 1, cell_format=data_format2)
         one_on_one_sheet.write(row, 0, None)

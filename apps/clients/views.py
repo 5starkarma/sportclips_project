@@ -40,3 +40,7 @@ def tenant_register(request):
     else:
         form = ClientForm()
     return render(request, 'clients/register.html', {'form': form})
+
+
+def input_billing_info(request):
+    return render(request, 'clients/checkout.html')

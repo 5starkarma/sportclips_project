@@ -11,7 +11,7 @@ class InviteView(LoginRequiredMixin, PermissionRequiredMixin, SuccessMessageMixi
     form_class = InviteForm
     success_url = reverse_lazy('invite')
     success_message = "An SMS invite has been sent."
-    permission_required = ('payroll.change_user',)
+    permission_required = ('payroll.change_client',)
     permission_denied_message = 'User does not have permissions to invite users.'
 
     def get_initial(self):
