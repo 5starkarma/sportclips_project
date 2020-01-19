@@ -42,7 +42,7 @@ class UserListView(LoginRequiredMixin, PermissionRequiredMixin, SuccessMessageMi
     model = User
     template_name = 'users/user_list.html'
     # paginate_by = 6
-    permission_required = ('payroll.change_user',)
+    permission_required = ('clients.add_client',)
     permission_denied_message = 'User does not have permissions to change user accounts.'
 
     def get_context_data(self, **kwargs):

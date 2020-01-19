@@ -68,7 +68,7 @@ def process_payroll(request):
 
 
 @login_required
-@permission_required('payroll.change_user', raise_exception=True)
+@permission_required('clients.add_clients', raise_exception=True)
 def settings_view(request):
     instance, _ = PayrollSettings.objects.get_or_create(id=1)
     if request.method == 'POST':

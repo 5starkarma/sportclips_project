@@ -3,7 +3,6 @@ from datetime import datetime
 from django.utils.dateformat import DateFormat
 from pytz import timezone
 
-from .excel_factory import extract_data_from
 from .models import PayrollSettings, Reports
 
 import numpy as np
@@ -252,7 +251,9 @@ def calculate_stylist_bonuses(df_all_employees):
 
     # focus bonus levels
     df_all_employees['Focus Level'] = ''
-
+    df_all_employees['Focus Level'] = np.where(
+        df_all_employees['Focus Bonus Multiplier'] < rookie_raise,
+        '', df_all_employees['Focus Level'])
     df_all_employees['Focus Level'] = np.where(
         df_all_employees['Focus Bonus Multiplier'] == rookie_raise,
         'Rookie!', df_all_employees['Focus Level'])
@@ -279,10 +280,11 @@ def calculate_stylist_bonuses(df_all_employees):
     df_all_employees['Take Home Tier'] = np.where(
         df_all_employees['Take Home Sales'] <
         take_hm_bonus_lvl_1_sales_min, 0, np.where(
-            df_all_employees['Take Home Sales'] >
+        df_all_employees['Take Home Sales'] >
             take_hm_bonus_lvl_2_sales_min,
             take_hm_bonus_lvl_2_multiplier,
             take_hm_bonus_lvl_1_multiplier))
+    
     df_all_employees['Take Home Bonus'] = (
             df_all_employees['Take Home Tier'] * (
         df_all_employees['Take Home Sales']).round(2))
