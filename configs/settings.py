@@ -20,13 +20,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'qy3e(7=2!r$_jt1^@y(tu-vmcseph-e^!#bqy#z*5rv1=z@vcx'
+SECRET_KEY = ''
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 DEVELOPMENT = True
 
-ADMINS = [('David', 'davidalford678@gmail.com'), ]
+ADMINS = [('David', ''), ]
 
 ALLOWED_HOSTS = ['*']
 
@@ -102,9 +102,9 @@ WSGI_APPLICATION = 'configs.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django_tenants.postgresql_backend',
-        'NAME': 'sportclips',
-        'USER': 'sportclips',
-        'PASSWORD': 'ktmrider732',
+        'NAME': '',
+        'USER': '',
+        'PASSWORD': '',
         'HOST': '127.0.0.1',
         'PORT': '5432'
     }
@@ -167,12 +167,12 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = "davidalford678@gmail.com"
+EMAIL_HOST_USER = "@gmail.com"
 EMAIL_HOST_PASSWORD = ""
 
-account_sid = 'AC6017eec02855c2846508b5c8534a72b8'
-auth_token = 'a34191d01d4e472cb0cf9982ce5e6001'
-sportclips_phone = '+15592057660'
+account_sid = ''
+auth_token = ''
+sportclips_phone = '+'
 
 TENANT_MODEL = "clients.Client"
 TENANT_DOMAIN_MODEL = "clients.Domain"
